@@ -3,6 +3,7 @@ package cmd
 import (
 	"fmt"
 	"os"
+	"regexp"
 	"text/template"
 
 	"github.com/spf13/cobra"
@@ -83,7 +84,11 @@ func (p *Project) createLicenseFile() error {
 }
 
 func (c *Command) Create() error {
-	cmdFile, err := os.Create(fmt.Sprintf("%s/cmd/%s.go", c.AbsolutePath, c.CmdName))
+
+	re := regexp.MustCompile("([a-z0-9])([A-Z])")
+	snakeName := re.ReplaceAllString(c.CmdName, "${1}_${2}")
+
+	cmdFile, err := os.Create(fmt.Sprintf("%s/cmd/%s.go", c.AbsolutePath, snakeName))
 	if err != nil {
 		return err
 	}
