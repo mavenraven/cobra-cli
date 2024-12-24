@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 	"regexp"
+	"strings"
 	"text/template"
 
 	"github.com/spf13/cobra"
@@ -88,7 +89,7 @@ func (c *Command) Create() error {
 	re := regexp.MustCompile("([a-z0-9])([A-Z])")
 	snakeName := re.ReplaceAllString(c.CmdName, "${1}_${2}")
 
-	cmdFile, err := os.Create(fmt.Sprintf("%s/cmd/%s.go", c.AbsolutePath, snakeName))
+	cmdFile, err := os.Create(fmt.Sprintf("%s/cmd/%s.go", c.AbsolutePath, strings.ToLower(snakeName)))
 	if err != nil {
 		return err
 	}
