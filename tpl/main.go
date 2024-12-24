@@ -14,10 +14,7 @@
 package tpl
 
 func MainTemplate() []byte {
-	return []byte(`/*
-{{ .Copyright }}
-{{ if .Legal.Header }}{{ .Legal.Header }}{{ end }}
-*/
+	return []byte(`
 package main
 
 import "{{ .PkgName }}/cmd"
@@ -29,10 +26,7 @@ func main() {
 }
 
 func RootTemplate() []byte {
-	return []byte(`/*
-{{ .Copyright }}
-{{ if .Legal.Header }}{{ .Legal.Header }}{{ end }}
-*/
+	return []byte(`
 package cmd
 
 import (
@@ -49,7 +43,6 @@ import (
 var cfgFile string
 {{- end }}
 
-// rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
 	Use:   "{{ .AppName }}",
 	Short: "A brief description of your application",
@@ -64,8 +57,6 @@ to quickly create a Cobra application.` + "`" + `,
 	// Run: func(cmd *cobra.Command, args []string) { },
 }
 
-// Execute adds all child commands to the root command and sets flags appropriately.
-// This is called by main.main(). It only needs to happen once to the rootCmd.
 func Execute() {
 	err := rootCmd.Execute()
 	if err != nil {
@@ -91,7 +82,6 @@ func init() {
 }
 
 {{ if .Viper -}}
-// initConfig reads in config file and ENV variables if set.
 func initConfig() {
 	if cfgFile != "" {
 		// Use config file from the flag.
@@ -119,10 +109,7 @@ func initConfig() {
 }
 
 func AddCommandTemplate() []byte {
-	return []byte(`/*
-{{ .Project.Copyright }}
-{{ if .Legal.Header }}{{ .Legal.Header }}{{ end }}
-*/
+	return []byte(`
 package cmd
 
 import (
@@ -131,7 +118,6 @@ import (
 	"github.com/spf13/cobra"
 )
 
-// {{ .CmdName }}Cmd represents the {{ .CmdName }} command
 var {{ .CmdName }}Cmd = &cobra.Command{
 	Use:   "{{ .CmdName }}",
 	Short: "A brief description of your command",
